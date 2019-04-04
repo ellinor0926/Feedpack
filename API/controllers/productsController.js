@@ -26,9 +26,9 @@ exports.getProduct = (req, res) => {
 
     q = mysql.format(q, inserts)
 
-    pool.query(q, (error, result) => {
+    pool.query(q, (error, products) => {
         if (error) throw error;
 
-        res.send(result)
+        res.send({products})
     })
 }
