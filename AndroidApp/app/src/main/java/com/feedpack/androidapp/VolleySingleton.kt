@@ -1,10 +1,9 @@
-package com.example.feedpacktest
+package com.feedpack.androidapp
 
 import android.content.Context
 import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.toolbox.Volley
-
 
 class VolleySingleton constructor(context: Context) {
     companion object {

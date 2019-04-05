@@ -26,8 +26,19 @@ exports.getProduct = (req, res) => {
 
     q = mysql.format(q, inserts)
 
-    pool.query(q, (error, products) => {
+    pool.query(q, (error, result) => {
         if (error) throw error;
+
+
+        const products = result.map(r => {
+            return {
+                item_number: r.item_number,
+                item_name: r.item_name,
+                dwp_number: r.dwp_number,
+                supplier: r.number
+            }
+        })
+
 
         res.send({products})
     })

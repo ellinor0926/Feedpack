@@ -1,4 +1,4 @@
-package com.example.feedpacktest
+package com.feedpack.androidapp
 import android.support.multidex.MultiDexApplication
 
 class KtApplication: MultiDexApplication(){

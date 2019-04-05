@@ -1,4 +1,4 @@
-package com.example.feedpacktest
+package com.feedpack.androidapp
 
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity

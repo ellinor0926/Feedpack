@@ -1,4 +1,4 @@
-package com.example.feedpacktest
+package com.feedpack.androidapp
 
 import org.junit.Test
 

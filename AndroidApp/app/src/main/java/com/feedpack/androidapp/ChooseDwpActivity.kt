@@ -1,10 +1,12 @@
-package com.example.feedpacktest
+package com.feedpack.androidapp
 
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.support.v7.widget.RecyclerView
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
@@ -44,7 +46,8 @@ class ChooseDwpActivity : Activity() {
         init {
             context = chooseDwpActivity
             val gson = GsonBuilder().setPrettyPrinting().create()
-            products = gson.fromJson(context.intent.extras.toString(), ProductsModel::class.java).products
+            products = gson.fromJson(context.intent.extras[INTENT_DWP_LIST].toString(), ProductsModel::class.java).products
+
         }
 
         override fun getItem(position: Int): Any {
@@ -56,16 +59,27 @@ class ChooseDwpActivity : Activity() {
         }
 
         override fun getCount(): Int {
-            return 5
+            return products.size
         }
 
         override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
-            val textView = TextView(context)
-            textView.text = "WOOO HOOOOO"
 
-            Log.d("App", products.toString())
+            val layoutInflater = LayoutInflater.from(context)
+            val row = layoutInflater.inflate(R.layout.dwp_list_row, null, false)
 
-            return textView
+            val dwpNumber = row.findViewById<TextView>(R.id.dwpNumber)
+            dwpNumber.text = "DWP number: ${products[position].dwp_number}"
+
+            val itemName = row.findViewById<TextView>(R.id.itemname)
+            itemName.text = "Name: ${products[position].item_name}"
+
+            val supplierNumber = row.findViewById<TextView>(R.id.suppliernumber)
+            supplierNumber.text = "Supplier: ${products[position].supplier}"
+
+            val itemNumber = row.findViewById<TextView>(R.id.itemnumber)
+            itemNumber.text = "Item number: ${products[position].item_number}"
+
+            return row
         }
 
     }

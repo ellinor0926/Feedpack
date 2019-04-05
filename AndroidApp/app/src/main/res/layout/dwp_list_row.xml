@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="12dp">
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/dwpNumber" android:layout_marginTop="12dp"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="12dp" android:text="DWP number: " android:fontFamily="@font/open_sans_semibold"
+            android:textStyle="bold" android:textSize="18sp"/>
+    <TextView
+            android:text="Item name:"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/itemname"
+            android:fontFamily="@font/open_sans_semibold"
+            app:layout_constraintStart_toEndOf="@+id/dwpNumber"
+            android:layout_marginStart="24dp"
+            app:layout_constraintBottom_toBottomOf="@+id/dwpNumber" android:textSize="18sp"/>
+    <TextView
+            android:text="Item number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/itemnumber" android:layout_marginTop="12dp"
+            app:layout_constraintTop_toBottomOf="@+id/dwpNumber" app:layout_constraintStart_toStartOf="@+id/dwpNumber"
+    />
+    <TextView
+            android:text="Supplier"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/suppliernumber" android:layout_marginTop="12dp"
+            app:layout_constraintTop_toBottomOf="@+id/itemname" app:layout_constraintStart_toStartOf="@+id/itemname"
+    />
+</android.support.constraint.ConstraintLayout>
