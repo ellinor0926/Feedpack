@@ -1,9 +1,11 @@
 const pool = require('../data/config');
-const controller = require('../controllers/productsController');
+const productController = require('../controllers/productsController');
+const feedbackController = require('../controllers/feedbackController')
 
 const router = app => {
-    app.get('/', controller.getProducts);
-    app.post('/getProduct', controller.getProduct);
+    app.get('/', productController.getProducts);
+    app.post('/getProduct', productController.getProduct);
+    app.post('/postFeedback', feedbackController.postFeedback);
 }
 
 module.exports = router;

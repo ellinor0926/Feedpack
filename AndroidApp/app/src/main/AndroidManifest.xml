@@ -3,7 +3,7 @@
           package="com.feedpack.androidapp">
 
     <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.CAMERA"/>
 
     <application
             android:allowBackup="true"
@@ -22,7 +22,23 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".ChooseDwpActivity" />
+        <activity android:name=".ChooseDwpActivity"
+                  android:label="Choose product"
+                  android:launchMode="singleTop">
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value=".MainActivity"/>
+        </activity>
+
+        <activity
+                android:name=".FeedbackActivity"
+                android:label="Feedback"
+                android:launchMode="singleTop">
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value=".ChooseDwpActivity"/>
+        </activity>
+
         <meta-data android:name="preloaded_fonts" android:resource="@array/preloaded_fonts"/>
     </application>
 

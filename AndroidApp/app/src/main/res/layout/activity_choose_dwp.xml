@@ -6,23 +6,19 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ChooseDwpActivity">
-    <TextView
-            android:layout_width="257dp"
-            android:layout_height="41dp"
-            android:text="Choose Product"
-            android:id="@+id/productHeader2"
-            android:fontFamily="@font/open_sans_semibold" android:textSize="30sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" android:textAlignment="center"
-            android:textColor="@color/colorPrimary"
-            android:layout_marginTop="16dp" app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginBottom="8dp" app:layout_constraintBottom_toTopOf="@+id/getProductBtn"
-            app:layout_constraintVertical_bias="0.144"/>
-    <ListView
+    <android.support.v7.widget.RecyclerView
             android:layout_width="395dp"
-            android:layout_height="519dp"
+            android:layout_height="530dp"
+            android:id="@+id/recyclerview_dwplist"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintHorizontal_bias="0.5" app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" android:id="@+id/chooseDwpList"
-            android:layout_marginTop="8dp" app:layout_constraintTop_toBottomOf="@+id/productHeader2"/>
+            android:layout_marginStart="12dp" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="12dp"
+            android:layout_marginBottom="12dp" app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginTop="16dp" app:layout_constraintTop_toTopOf="parent"/>
+    <!--<ListView-->
+            <!--android:layout_width="395dp"-->
+            <!--android:layout_height="519dp"-->
+            <!--app:layout_constraintStart_toStartOf="parent"-->
+            <!--app:layout_constraintHorizontal_bias="0.5" app:layout_constraintEnd_toEndOf="parent"-->
+            <!--app:layout_constraintBottom_toBottomOf="parent" android:id="@+id/chooseDwpList"-->
+            <!--android:layout_marginTop="8dp" app:layout_constraintTop_toBottomOf="@+id/productHeader2"/>-->
 </android.support.constraint.ConstraintLayout>

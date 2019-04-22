@@ -26,12 +26,14 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        //Start scan function
         startScanBtn.setOnClickListener {
             run {
                 IntentIntegrator(this@MainActivity).initiateScan()
             }
         }
 
+        //Fetch product
         getProductBtn.setOnClickListener {
             val url = "http://10.0.2.2:3002/getProduct"
 //            val url = "http://192.168.0.101:3002/getProduct"
@@ -49,11 +51,9 @@ class MainActivity : AppCompatActivity() {
             val request = JsonObjectRequest(Request.Method.POST, url, body,
                 Response.Listener { response ->
                     try {
-//                        val products = gson.fromJson(response.toString(), ProductsModel::class.java)
                         val intent = ChooseDwpActivity.newIntent(this, response.toString())
                         startActivity(intent)
 
-                        Log.d("App", "Response ${response}")
                     } catch (e:Exception) {
                         Log.d("App", "Exception $e")
                     }
@@ -71,6 +71,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    //Scanner result handler
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 
         val result: IntentResult? = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)

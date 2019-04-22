@@ -29,7 +29,6 @@ exports.getProduct = (req, res) => {
     pool.query(q, (error, result) => {
         if (error) throw error;
 
-
         const products = result.map(r => {
             return {
                 item_number: r.item_number,
@@ -38,7 +37,6 @@ exports.getProduct = (req, res) => {
                 supplier: r.number
             }
         })
-
 
         res.send({products})
     })
