@@ -8,12 +8,31 @@ import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.CheckBox
+import com.google.gson.GsonBuilder
 import kotlinx.android.synthetic.main.activity_feedback.*
 
 class FeedbackActivity : AppCompatActivity() {
 
+    var product : ProductModel?
+    var feedbackBody : FeedbackBodyModel?
+
+    init {
+        product = null
+        feedbackBody = null
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val gson = GsonBuilder().setPrettyPrinting().create()
+        product = gson.fromJson(this.intent.extras[ChooseDwpAdapter.CHOSEN_PRODUCT].toString(), ProductModel::class.java)
+
+
+//        feedbackBody = FeedbackBodyModel(
+//            productId =
+//
+//        )
+
         setContentView(R.layout.activity_feedback)
 
         bottom_navigation.setOnNavigationItemSelectedListener(navListener)
@@ -28,7 +47,7 @@ class FeedbackActivity : AppCompatActivity() {
             .commit()
 
     }
-
+// Bottom Menu Navigation
     private val navListener = object : BottomNavigationView.OnNavigationItemSelectedListener {
         override fun onNavigationItemSelected(item: MenuItem): Boolean {
 
@@ -51,15 +70,18 @@ class FeedbackActivity : AppCompatActivity() {
     }
 
     fun onCheckboxClicked(view: View) {
+        Log.d("App", "YOU HAVE PRoDUCT ID: ${product?.id}")
         if (view is CheckBox) {
             val checked: Boolean = view.isChecked
 
             when (view.id) {
                 R.id.checkBox_type_id_1 -> {
                     if (checked) {
-                        Log.d("App", "ID 1 is checked")
+                        feedbackBody?.types?.add(1)
+                        Log.d("App", feedbackBody?.types.toString())
                     } else {
-                        Log.d("App", "ID 1 is unchecked")
+                        feedbackBody?.types?.remove(1)
+                        Log.d("App", feedbackBody?.types.toString())
                     }
                 }
                 R.id.checkBox_type_id_2 -> {
@@ -103,7 +125,5 @@ class FeedbackActivity : AppCompatActivity() {
             }
         }
     }
-
-
 
 }

@@ -8,8 +8,14 @@ import android.view.View
 import android.view.ViewGroup
 import com.google.gson.GsonBuilder
 import kotlinx.android.synthetic.main.dwp_list_row.view.*
+import org.json.JSONObject
 
 class ChooseDwpAdapter(chooseDwpActivity: ChooseDwpActivity): RecyclerView.Adapter<CustomViewHolder>() {
+
+    companion object {
+        val PRODUCT_TITLE = "PRODUCT_TITLE"
+        val CHOSEN_PRODUCT = "CHOSEN_PRODUCT"
+    }
 
     val context : ChooseDwpActivity
     val products: ArrayList<ProductModel>
@@ -47,16 +53,18 @@ class ChooseDwpAdapter(chooseDwpActivity: ChooseDwpActivity): RecyclerView.Adapt
 
 class CustomViewHolder(val view: View, var product: ProductModel? = null): RecyclerView.ViewHolder(view) {
 
-    companion object {
-        val PRODUCT_TITLE = "PRODUCT_TITLE"
-    }
 
     init {
         view.setOnClickListener {
-
+            Log.d("App", "YOU will send DWP: ${product?.dwp_number}")
             val intent = Intent(view.context, FeedbackActivity::class.java)
 
-            intent.putExtra(PRODUCT_TITLE, product?.item_name)
+            val gson = GsonBuilder().setPrettyPrinting().create()
+
+            val jsonProduct = JSONObject(gson.toJson(product))
+
+            intent.putExtra(ChooseDwpAdapter.PRODUCT_TITLE, product?.item_name)
+            intent.putExtra(ChooseDwpAdapter.CHOSEN_PRODUCT, jsonProduct.toString())
 
             view.context.startActivity(intent)
 

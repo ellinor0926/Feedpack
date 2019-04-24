@@ -11,7 +11,7 @@ exports.getProducts = (req, res) => {
 
 exports.getProduct = (req, res) => {
     let q = 
-    `SELECT p.item_number, p.item_name, p.dwp_number, s.number FROM products p
+    `SELECT p.id, p.item_number, p.item_name, p.dwp_number, s.number FROM products p
     JOIN products_suppliers ps ON p.id = ps.product_id
     JOIN suppliers s ON ps.supplier_id = s.id
     WHERE p.item_number = ?
@@ -31,6 +31,7 @@ exports.getProduct = (req, res) => {
 
         const products = result.map(r => {
             return {
+                id: r.id,
                 item_number: r.item_number,
                 item_name: r.item_name,
                 dwp_number: r.dwp_number,
