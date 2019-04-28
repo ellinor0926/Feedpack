@@ -1,4 +1,4 @@
-package com.feedpack.androidapp
+package com.feedpack.androidapp.models
 
 data class ProductQueryModel (
     val itemNumber: String,

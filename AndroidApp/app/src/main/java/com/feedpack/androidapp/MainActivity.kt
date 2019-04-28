@@ -8,15 +8,13 @@ import android.util.Log
 import com.android.volley.DefaultRetryPolicy
 import com.android.volley.Request
 import com.android.volley.Response
-import com.android.volley.toolbox.JsonArrayRequest
 import com.android.volley.toolbox.JsonObjectRequest
-import com.android.volley.toolbox.JsonRequest
+import com.feedpack.androidapp.models.ProductQueryModel
+import com.feedpack.androidapp.views.choosedwp.ChooseDwpActivity
 import com.google.gson.GsonBuilder
-import com.google.gson.JsonObject
 import com.google.zxing.integration.android.IntentIntegrator
 import com.google.zxing.integration.android.IntentResult
 import kotlinx.android.synthetic.main.activity_main.*
-import org.json.JSONArray
 import org.json.JSONObject
 import java.lang.Exception
 

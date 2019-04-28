@@ -1,10 +1,12 @@
-package com.feedpack.androidapp
+package com.feedpack.androidapp.views.choosedwp
 
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
+import com.feedpack.androidapp.R
+import com.feedpack.androidapp.models.ProductModel
 import kotlinx.android.synthetic.main.activity_choose_dwp.*
 
 class ChooseDwpActivity : AppCompatActivity() {
