@@ -3,4 +3,12 @@
     <string name="send_feedback">Send feedback</string>
     <string name="read_feedback">Read feedback</string>
     <string name="announcements">Announcements</string>
+    <string name="comment">Comment</string>
+    <string name="consumer_pack">Consumer Pack</string>
+    <string name="multi_pack">Multi Pack</string>
+    <string name="unit_load">Unit Load</string>
+    <string name="efficiency">Efficiency</string>
+    <string name="ergonomic">Ergonomic</string>
+    <string name="inspiring">Inspiring</string>
+    <string name="submit">Submit</string>
 </resources>

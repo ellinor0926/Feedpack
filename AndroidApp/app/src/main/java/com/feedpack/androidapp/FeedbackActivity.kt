@@ -8,36 +8,25 @@ import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.CheckBox
+import com.android.volley.DefaultRetryPolicy
+import com.android.volley.Request
+import com.android.volley.Response
+import com.android.volley.toolbox.JsonObjectRequest
 import com.google.gson.GsonBuilder
 import kotlinx.android.synthetic.main.activity_feedback.*
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.fragment_send_feedback.*
+import org.json.JSONObject
+import java.lang.Exception
 
 class FeedbackActivity : AppCompatActivity() {
 
-    var product : ProductModel?
-    var feedbackBody : FeedbackBodyModel?
+    var product: ProductModel?
+    var feedbackBody: FeedbackBodyModel?
 
     init {
         product = null
         feedbackBody = null
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        val gson = GsonBuilder().setPrettyPrinting().create()
-        product = gson.fromJson(this.intent.extras[ChooseDwpAdapter.CHOSEN_PRODUCT].toString(), ProductModel::class.java)
-
-
-//        feedbackBody = FeedbackBodyModel(
-//            productId =
-//
-//        )
-
-        setContentView(R.layout.activity_feedback)
-
-        bottom_navigation.setOnNavigationItemSelectedListener(navListener)
-
-        addFragment(SendFeedbackFragment())
     }
 
     private fun addFragment(fragment: Fragment) {
@@ -47,7 +36,8 @@ class FeedbackActivity : AppCompatActivity() {
             .commit()
 
     }
-// Bottom Menu Navigation
+
+    // Bottom Menu Navigation
     private val navListener = object : BottomNavigationView.OnNavigationItemSelectedListener {
         override fun onNavigationItemSelected(item: MenuItem): Boolean {
 
@@ -87,8 +77,7 @@ class FeedbackActivity : AppCompatActivity() {
                 R.id.checkBox_type_id_2 -> {
                     if (checked) {
                         Log.d("App", "ID 2 is checked")
-                    }
-                    else {
+                    } else {
                         Log.d("App", "ID 2 is unchecked")
                     }
                 }
@@ -99,31 +88,51 @@ class FeedbackActivity : AppCompatActivity() {
                         Log.d("App", "ID 3 is unchecked")
                     }
                 }
-                R.id.checkBox_type_id_4 -> {
-                    if (checked) {
-                        Log.d("App", "ID 4 is checked")
-                    }
-                    else {
-                        Log.d("App", "ID 4 is unchecked")
-                    }
-                }
-                R.id.checkBox_type_id_5 -> {
-                    if (checked) {
-                        Log.d("App", "ID 5 is checked")
-                    } else {
-                        Log.d("App", "ID 5 is unchecked")
-                    }
-                }
-                R.id.checkBox_type_id_6 -> {
-                    if (checked) {
-                        Log.d("App", "ID 6 is checked")
-                    }
-                    else {
-                        Log.d("App", "ID 6 is unchecked")
-                    }
-                }
+//                R.id.checkBox_type_id_4 -> {
+//                    if (checked) {
+//                        Log.d("App", "ID 4 is checked")
+//                    }
+//                    else {
+//                        Log.d("App", "ID 4 is unchecked")
+//                    }
+//                }
+//                R.id.checkBox_type_id_5 -> {
+//                    if (checked) {
+//                        Log.d("App", "ID 5 is checked")
+//                    } else {
+//                        Log.d("App", "ID 5 is unchecked")
+//                    }
+//                }
+//                R.id.checkBox_type_id_6 -> {
+//                    if (checked) {
+//                        Log.d("App", "ID 6 is checked")
+//                    }
+//                    else {
+//                        Log.d("App", "ID 6 is unchecked")
+//                    }
+//                }
             }
         }
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        val gson = GsonBuilder().setPrettyPrinting().create()
+        product =
+            gson.fromJson(this.intent.extras[ChooseDwpAdapter.CHOSEN_PRODUCT].toString(), ProductModel::class.java)
+
+
+        setContentView(R.layout.activity_feedback)
+
+        bottom_navigation.setOnNavigationItemSelectedListener(navListener)
+
+        addFragment(SendFeedbackFragment())
+
+
+    }
 }
+
+
+
+
