@@ -96,6 +96,7 @@ class FeedbackActivity : AppCompatActivity() {
             Request.Method.POST, url, body,
             Response.Listener { response ->
                 try {
+                    addFragment(ReadFeedbackFragment())
                     Log.d("App", "Post successful ${response}")
                 } catch (e: Exception) {
                     Log.d("App", "Exception $e")
