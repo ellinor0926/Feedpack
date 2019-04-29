@@ -76,7 +76,7 @@ class FeedbackActivity : AppCompatActivity() {
         val feedbackBody = FeedbackBodyModel(
             productId = product.id,
             userId = 1,
-            comment = "comment",
+            comment = feedbackComment.text.toString(),
             types = listOf(
                 if (che1.isChecked) 1 else 0,
                 if (che2.isChecked) 2 else 0,
