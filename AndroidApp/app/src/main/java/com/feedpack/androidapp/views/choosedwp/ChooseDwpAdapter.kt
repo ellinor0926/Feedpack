@@ -1,4 +1,4 @@
-package com.feedpack.androidapp
+package com.feedpack.androidapp.views.choosedwp
 
 import android.content.Intent
 import android.support.v7.widget.RecyclerView
@@ -6,6 +6,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.feedpack.androidapp.R
+import com.feedpack.androidapp.models.ProductModel
+import com.feedpack.androidapp.views.feedback.FeedbackActivity
 import com.google.gson.GsonBuilder
 import kotlinx.android.synthetic.main.dwp_list_row.view.*
 import org.json.JSONObject

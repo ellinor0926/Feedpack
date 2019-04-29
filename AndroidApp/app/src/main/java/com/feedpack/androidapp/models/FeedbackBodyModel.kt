@@ -1,8 +1,8 @@
-package com.feedpack.androidapp
+package com.feedpack.androidapp.models
 
 data class FeedbackBodyModel (
     val productId: Int,
     val userId: Int,
     val comment: String,
-    val types: MutableList<Int>
+    val types: List<Int>
 )

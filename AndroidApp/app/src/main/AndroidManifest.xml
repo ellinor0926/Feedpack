@@ -23,7 +23,7 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".ChooseDwpActivity"
+        <activity android:name=".views.choosedwp.ChooseDwpActivity"
                   android:label="Choose product"
                   android:launchMode="singleTop">
             <meta-data
@@ -32,12 +32,12 @@
         </activity>
 
         <activity
-                android:name=".FeedbackActivity"
+                android:name=".views.feedback.FeedbackActivity"
                 android:label="Feedback"
                 android:launchMode="singleTop">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
-                    android:value=".ChooseDwpActivity"/>
+                    android:value=".views.choosedwp.ChooseDwpActivity"/>
         </activity>
 
         <meta-data android:name="preloaded_fonts" android:resource="@array/preloaded_fonts"/>
