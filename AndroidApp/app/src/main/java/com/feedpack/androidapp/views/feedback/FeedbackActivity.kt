@@ -9,12 +9,19 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.CheckBox
 import android.widget.EditText
+import com.android.volley.DefaultRetryPolicy
+import com.android.volley.Request
+import com.android.volley.Response
+import com.android.volley.toolbox.JsonObjectRequest
 import com.feedpack.androidapp.views.choosedwp.ChooseDwpAdapter
 import com.feedpack.androidapp.R
+import com.feedpack.androidapp.VolleySingleton
 import com.feedpack.androidapp.models.FeedbackBodyModel
 import com.feedpack.androidapp.models.ProductModel
 import com.google.gson.GsonBuilder
 import kotlinx.android.synthetic.main.activity_feedback.*
+import org.json.JSONObject
+import java.lang.Exception
 
 class FeedbackActivity : AppCompatActivity() {
 
@@ -83,6 +90,27 @@ class FeedbackActivity : AppCompatActivity() {
                 if (che3.isChecked) 3 else 0
             ).filter { it > 0 }
         )
+        val url = "http://10.0.2.2:3002/postFeedback"
+        val body = JSONObject(gson.toJson(feedbackBody))
+        val request = JsonObjectRequest(
+            Request.Method.POST, url, body,
+            Response.Listener { response ->
+                try {
+                    Log.d("App", "Post successful ${response}")
+                } catch (e: Exception) {
+                    Log.d("App", "Exception $e")
+                }
+            }, Response.ErrorListener { Log.d("App", "Volley error $it") })
+
+        request.retryPolicy = DefaultRetryPolicy(
+            DefaultRetryPolicy.DEFAULT_TIMEOUT_MS,
+            // 0 means no retry
+            0, // DefaultRetryPolicy.DEFAULT_MAX_RETRIES = 2
+            1f // DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
+        )
+
+        VolleySingleton.getInstance(this).addToRequestQueue(request)
+
 
 
         Log.d("App", "feedbackBody: $feedbackBody")
