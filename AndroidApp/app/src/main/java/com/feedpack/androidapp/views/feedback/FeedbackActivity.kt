@@ -1,5 +1,6 @@
 package com.feedpack.androidapp.views.feedback
 
+import android.graphics.Color
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
@@ -127,7 +128,12 @@ class FeedbackActivity : AppCompatActivity() {
                 R.id.efficiency_btn -> {
                     val che: CheckBox = findViewById(R.id.checkBox_type_id_4)
                     che.isChecked = !che.isChecked
-
+                    if (che.isChecked) {
+                        view.setColorFilter(Color.argb(100, 76, 175, 80))
+                    } else {
+//                        Change color here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                        view.setColorFilter(Color.argb(100, 76, 175, 80))
+                    }
                 }
                 R.id.ergonomic_btn -> {
                     val che: CheckBox = findViewById(R.id.checkBox_type_id_5)
