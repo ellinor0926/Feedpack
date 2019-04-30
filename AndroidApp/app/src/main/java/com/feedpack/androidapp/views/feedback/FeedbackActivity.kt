@@ -74,9 +74,9 @@ class FeedbackActivity : AppCompatActivity() {
         val che1: CheckBox = findViewById(R.id.checkBox_type_id_1)
         val che2: CheckBox = findViewById(R.id.checkBox_type_id_2)
         val che3: CheckBox = findViewById(R.id.checkBox_type_id_3)
+        val che4: CheckBox = findViewById(R.id.checkBox_type_id_4)
+        val che5: CheckBox = findViewById(R.id.checkBox_type_id_5)
         val che6: CheckBox = findViewById(R.id.checkBox_type_id_6)
-//        val che2: CheckBox = findViewById(R.id.checkBox_type_id_2)
-//        val che3: CheckBox = findViewById(R.id.checkBox_type_id_3)
 
         val feedbackComment: EditText = findViewById(R.id.feedbackComment)
 
@@ -88,6 +88,8 @@ class FeedbackActivity : AppCompatActivity() {
                 if (che1.isChecked) 1 else 0,
                 if (che2.isChecked) 2 else 0,
                 if (che3.isChecked) 3 else 0,
+                if (che4.isChecked) 4 else 0,
+                if (che5.isChecked) 5 else 0,
                 if (che6.isChecked) 6 else 0
             ).filter { it > 0 }
         )
