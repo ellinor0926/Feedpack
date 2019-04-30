@@ -122,10 +122,23 @@ class FeedbackActivity : AppCompatActivity() {
         if (view is ImageView) {
 
             when (view.id) {
+                R.id.efficiency_btn -> {
+                    val che: CheckBox = findViewById(R.id.checkBox_type_id_4)
+                    che.isChecked = !che.isChecked
+                    if (che.isChecked) {
+                        R.id.efficiency_btn.tint
+                    }
+
+                }
+                R.id.ergonomic_btn -> {
+                    val che: CheckBox = findViewById(R.id.checkBox_type_id_5)
+                    che.isChecked = !che.isChecked
+
+                }
                 R.id.inspiring_btn -> {
                     val che: CheckBox = findViewById(R.id.checkBox_type_id_6)
                     che.isChecked = !che.isChecked
-                    
+
                 }
             }
         }
