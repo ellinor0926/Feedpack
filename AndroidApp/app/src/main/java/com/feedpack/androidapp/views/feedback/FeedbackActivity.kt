@@ -125,9 +125,6 @@ class FeedbackActivity : AppCompatActivity() {
                 R.id.efficiency_btn -> {
                     val che: CheckBox = findViewById(R.id.checkBox_type_id_4)
                     che.isChecked = !che.isChecked
-                    if (che.isChecked) {
-                        R.id.efficiency_btn.tint
-                    }
 
                 }
                 R.id.ergonomic_btn -> {
