@@ -9,6 +9,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.CheckBox
 import android.widget.EditText
+import android.widget.ImageView
 import com.android.volley.DefaultRetryPolicy
 import com.android.volley.Request
 import com.android.volley.Response
@@ -73,10 +74,9 @@ class FeedbackActivity : AppCompatActivity() {
         val che1: CheckBox = findViewById(R.id.checkBox_type_id_1)
         val che2: CheckBox = findViewById(R.id.checkBox_type_id_2)
         val che3: CheckBox = findViewById(R.id.checkBox_type_id_3)
-//        val che1: CheckBox = findViewById(R.id.checkBox_type_id_1)
+        val che6: CheckBox = findViewById(R.id.checkBox_type_id_6)
 //        val che2: CheckBox = findViewById(R.id.checkBox_type_id_2)
 //        val che3: CheckBox = findViewById(R.id.checkBox_type_id_3)
-        Log.d("App", "che1: ${che1.isChecked} | che2: ${che2.isChecked} | che3: ${che3.isChecked}")
 
         val feedbackComment: EditText = findViewById(R.id.feedbackComment)
 
@@ -87,7 +87,8 @@ class FeedbackActivity : AppCompatActivity() {
             types = listOf(
                 if (che1.isChecked) 1 else 0,
                 if (che2.isChecked) 2 else 0,
-                if (che3.isChecked) 3 else 0
+                if (che3.isChecked) 3 else 0,
+                if (che6.isChecked) 6 else 0
             ).filter { it > 0 }
         )
         val url = "http://10.0.2.2:3002/postFeedback"
@@ -97,7 +98,7 @@ class FeedbackActivity : AppCompatActivity() {
             Response.Listener { response ->
                 try {
                     addFragment(ReadFeedbackFragment())
-                    Log.d("App", "Post successful ${response}")
+                    Log.d("App", "Post successful $response")
                 } catch (e: Exception) {
                     Log.d("App", "Exception $e")
                 }
@@ -115,6 +116,19 @@ class FeedbackActivity : AppCompatActivity() {
 
 
         Log.d("App", "feedbackBody: $feedbackBody")
+    }
+
+    fun toggleCheckBox(view: View) {
+        if (view is ImageView) {
+
+            when (view.id) {
+                R.id.inspiring_btn -> {
+                    val che: CheckBox = findViewById(R.id.checkBox_type_id_6)
+                    che.isChecked = !che.isChecked
+                    
+                }
+            }
+        }
     }
 
 }
