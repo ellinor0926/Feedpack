@@ -11,6 +11,7 @@ import android.view.View
 import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.TextView
 import com.android.volley.DefaultRetryPolicy
 import com.android.volley.Request
 import com.android.volley.Response
@@ -30,6 +31,12 @@ class FeedbackActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_feedback)
+
+//        Set toolbar title
+        val gson = GsonBuilder().setPrettyPrinting().create()
+        val product =
+            gson.fromJson(this.intent.extras[ChooseDwpAdapter.CHOSEN_PRODUCT].toString(), ProductModel::class.java)
+        setTitle(product.item_name)
 
         bottom_navigation.setOnNavigationItemSelectedListener(navListener)
 
@@ -116,33 +123,56 @@ class FeedbackActivity : AppCompatActivity() {
 
         VolleySingleton.getInstance(this).addToRequestQueue(request)
 
-
-
         Log.d("App", "feedbackBody: $feedbackBody")
     }
 
+//    ImageView toggles efficiency, ergonomic, inspiring
     fun toggleCheckBox(view: View) {
         if (view is ImageView) {
 
             when (view.id) {
                 R.id.efficiency_btn -> {
                     val che: CheckBox = findViewById(R.id.checkBox_type_id_4)
+                    val label: TextView = findViewById(R.id.efficiency_label)
+
                     che.isChecked = !che.isChecked
+
                     if (che.isChecked) {
                         view.setColorFilter(Color.argb(100, 76, 175, 80))
+                        label.setTextColor(getResources().getColor(R.color.colorBright))
                     } else {
-//                        Change color here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                        view.setColorFilter(Color.argb(100, 76, 175, 80))
+                        view.setColorFilter(Color.argb(100, 216, 216, 216))
+                        label.setTextColor(getResources().getColor(R.color.colorPrimary))
                     }
                 }
                 R.id.ergonomic_btn -> {
                     val che: CheckBox = findViewById(R.id.checkBox_type_id_5)
+                    val label: TextView = findViewById(R.id.ergonomic_label)
+
                     che.isChecked = !che.isChecked
+
+                    if (che.isChecked) {
+                        view.setColorFilter(Color.argb(100, 76, 175, 80))
+                        label.setTextColor(getResources().getColor(R.color.colorBright))
+                    } else {
+                        view.setColorFilter(Color.argb(100, 216, 216, 216))
+                        label.setTextColor(getResources().getColor(R.color.colorPrimary))
+                    }
 
                 }
                 R.id.inspiring_btn -> {
                     val che: CheckBox = findViewById(R.id.checkBox_type_id_6)
+                    val label: TextView = findViewById(R.id.inspiring_label)
+
                     che.isChecked = !che.isChecked
+
+                    if (che.isChecked) {
+                        view.setColorFilter(Color.argb(100, 76, 175, 80))
+                        label.setTextColor(getResources().getColor(R.color.colorBright))
+                    } else {
+                        view.setColorFilter(Color.argb(100, 216, 216, 216))
+                        label.setTextColor(getResources().getColor(R.color.colorPrimary))
+                    }
 
                 }
             }
