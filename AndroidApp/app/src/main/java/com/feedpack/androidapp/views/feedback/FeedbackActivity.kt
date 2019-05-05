@@ -21,6 +21,8 @@ import com.feedpack.androidapp.R
 import com.feedpack.androidapp.VolleySingleton
 import com.feedpack.androidapp.models.FeedbackBodyModel
 import com.feedpack.androidapp.models.ProductModel
+import com.feedpack.androidapp.CameraFragment
+import com.feedpack.androidapp.FragmentStateHelper
 import com.google.gson.GsonBuilder
 import kotlinx.android.synthetic.main.activity_feedback.*
 import org.json.JSONObject
@@ -36,12 +38,13 @@ class FeedbackActivity : AppCompatActivity() {
         val gson = GsonBuilder().setPrettyPrinting().create()
         val product =
             gson.fromJson(this.intent.extras[ChooseDwpAdapter.CHOSEN_PRODUCT].toString(), ProductModel::class.java)
-        setTitle(product.item_name)
+        title = product.item_name
 
         bottom_navigation.setOnNavigationItemSelectedListener(navListener)
 
         // Default fragment
         addFragment(SendFeedbackFragment())
+
     }
 
     // Bottom Menu Navigation
@@ -112,7 +115,7 @@ class FeedbackActivity : AppCompatActivity() {
                 } catch (e: Exception) {
                     Log.d("App", "Exception $e")
                 }
-            }, Response.ErrorListener { Log.d("App", "Volley error $it") })
+            }, Response.ErrorListener { Log.d("App", "Volley error from feedback $it") })
 
         request.retryPolicy = DefaultRetryPolicy(
             DefaultRetryPolicy.DEFAULT_TIMEOUT_MS,
@@ -126,7 +129,7 @@ class FeedbackActivity : AppCompatActivity() {
         Log.d("App", "feedbackBody: $feedbackBody")
     }
 
-//    ImageView toggles efficiency, ergonomic, inspiring
+    //    ImageView toggles efficiency, ergonomic, inspiring
     fun toggleCheckBox(view: View) {
         if (view is ImageView) {
 
@@ -139,10 +142,10 @@ class FeedbackActivity : AppCompatActivity() {
 
                     if (che.isChecked) {
                         view.setColorFilter(Color.argb(100, 76, 175, 80))
-                        label.setTextColor(getResources().getColor(R.color.colorBright))
+                        label.setTextColor(resources.getColor(R.color.colorBright))
                     } else {
                         view.setColorFilter(Color.argb(100, 216, 216, 216))
-                        label.setTextColor(getResources().getColor(R.color.colorPrimary))
+                        label.setTextColor(resources.getColor(R.color.colorPrimary))
                     }
                 }
                 R.id.ergonomic_btn -> {
@@ -153,10 +156,10 @@ class FeedbackActivity : AppCompatActivity() {
 
                     if (che.isChecked) {
                         view.setColorFilter(Color.argb(100, 76, 175, 80))
-                        label.setTextColor(getResources().getColor(R.color.colorBright))
+                        label.setTextColor(resources.getColor(R.color.colorBright))
                     } else {
                         view.setColorFilter(Color.argb(100, 216, 216, 216))
-                        label.setTextColor(getResources().getColor(R.color.colorPrimary))
+                        label.setTextColor(resources.getColor(R.color.colorPrimary))
                     }
 
                 }
@@ -168,10 +171,10 @@ class FeedbackActivity : AppCompatActivity() {
 
                     if (che.isChecked) {
                         view.setColorFilter(Color.argb(100, 76, 175, 80))
-                        label.setTextColor(getResources().getColor(R.color.colorBright))
+                        label.setTextColor(resources.getColor(R.color.colorBright))
                     } else {
                         view.setColorFilter(Color.argb(100, 216, 216, 216))
-                        label.setTextColor(getResources().getColor(R.color.colorPrimary))
+                        label.setTextColor(resources.getColor(R.color.colorPrimary))
                     }
 
                 }
@@ -179,8 +182,14 @@ class FeedbackActivity : AppCompatActivity() {
         }
     }
 
+    //    Camera Activity
+    fun startCamera(view: View) {
+//        FragmentStateHelper()
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.fragment_container, CameraFragment())
+            .addToBackStack(null)
+            .commit()
+    }
+
 }
-
-
-
-

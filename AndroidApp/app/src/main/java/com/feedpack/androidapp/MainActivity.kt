@@ -55,7 +55,7 @@ class MainActivity : AppCompatActivity() {
                     } catch (e:Exception) {
                         Log.d("App", "Exception $e")
                     }
-                }, Response.ErrorListener { Log.d("App", "Volley error $it") })
+                }, Response.ErrorListener { Log.d("App", "Volley error from main $it") })
 
             request.retryPolicy = DefaultRetryPolicy(
                 DefaultRetryPolicy.DEFAULT_TIMEOUT_MS,
