@@ -1,7 +1,10 @@
 package com.feedpack.androidapp.views.feedback
 
+import android.content.Intent
+import android.graphics.Bitmap
 import android.graphics.Color
 import android.os.Bundle
+import android.provider.MediaStore
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
@@ -182,14 +185,31 @@ class FeedbackActivity : AppCompatActivity() {
         }
     }
 
+
+    val REQUEST_IMAGE_CAPTURE = 1
     //    Camera Activity
     fun startCamera(view: View) {
+        Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
+            takePictureIntent.resolveActivity(packageManager)?.also {
+                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
+            }
+        }
 //        FragmentStateHelper()
-        supportFragmentManager
-            .beginTransaction()
-            .replace(R.id.fragment_container, CameraFragment())
-            .addToBackStack(null)
-            .commit()
+//        supportFragmentManager
+//            .beginTransaction()
+//            .replace(R.id.fragment_container, CameraFragment())
+//            .addToBackStack(null)
+//            .commit()
     }
+
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            val imageBitmap = data?.extras?.get("data") as Bitmap
+            val imageView : ImageView = findViewById(R.id.thumbnail)
+            imageView.setImageBitmap(imageBitmap)
+        }
+    }
+
 
 }
