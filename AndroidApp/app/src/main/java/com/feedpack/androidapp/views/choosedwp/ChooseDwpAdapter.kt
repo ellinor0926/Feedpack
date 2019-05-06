@@ -59,7 +59,6 @@ class CustomViewHolder(val view: View, var product: ProductModel? = null): Recyc
 
     init {
         view.setOnClickListener {
-            Log.d("App", "YOU will send DWP: ${product?.dwp_number}")
             val intent = Intent(view.context, FeedbackActivity::class.java)
 
             val gson = GsonBuilder().setPrettyPrinting().create()
