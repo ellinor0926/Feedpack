@@ -47,3 +47,43 @@ exports.postFeedback = (req, res) => {
 
 
 }
+
+exports.getFeedbackOnProduct = (req, res) => {
+    let query = `SELECT f.id, ft.feedback_id as type_feedback_id, f.comment, GROUP_CONCAT(t.name) as type, u.first_name, u.last_name, p.item_name, p.item_number, p.dwp_number, s.number as supplier FROM feedback f
+    JOIN products p ON f.product_id = p.id
+    JOIN feedback_has_types ft ON f.id = ft.feedback_id
+    JOIN types t ON ft.type_id = t.id
+    JOIN users u ON f.user_id = u.id
+    JOIN products_suppliers ps ON p.id = ps.product_id
+    JOIN suppliers s ON ps.supplier_id = s.id
+    WHERE f.product_id = ?
+    GROUP BY f.id`
+
+    let productId = req.params.id;
+
+    query = mysql.format(query, productId)
+
+    pool.query(query, (error, result) => {
+        if (error) throw error;
+
+        let feedback = result.map((r, i) => {
+
+            return {
+                id: r.id,
+                dwp_number: r.dwp_number,
+                item_number: r.item_number,
+                item_name: r.item_name,
+                supplier: r.supplier,
+                sender: {
+                    first_name: r.first_name,
+                    last_name: r.last_name
+                },
+                types: r.type.split(','),
+                comment: r.comment
+            }
+        })
+        
+
+        res.send(feedback)
+    })
+}

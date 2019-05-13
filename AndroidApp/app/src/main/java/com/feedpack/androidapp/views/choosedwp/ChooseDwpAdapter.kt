@@ -16,15 +16,14 @@ import org.json.JSONObject
 class ChooseDwpAdapter(chooseDwpActivity: ChooseDwpActivity): RecyclerView.Adapter<CustomViewHolder>() {
 
     companion object {
-        val PRODUCT_TITLE = "PRODUCT_TITLE"
-        val CHOSEN_PRODUCT = "CHOSEN_PRODUCT"
+        const val PRODUCT_TITLE = "PRODUCT_TITLE"
+        const val CHOSEN_PRODUCT = "CHOSEN_PRODUCT"
     }
 
-    val context : ChooseDwpActivity
-    val products: ArrayList<ProductModel>
+    private val context : ChooseDwpActivity = chooseDwpActivity
+    private val products: ArrayList<ProductModel>
 
     init {
-        context = chooseDwpActivity
         val gson = GsonBuilder().setPrettyPrinting().create()
         products = gson.fromJson(context.intent.extras[ChooseDwpActivity.INTENT_DWP_LIST].toString(), ChooseDwpActivity.ProductsModel::class.java).products
 

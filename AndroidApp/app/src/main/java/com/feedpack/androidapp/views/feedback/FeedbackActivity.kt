@@ -1,5 +1,6 @@
 package com.feedpack.androidapp.views.feedback
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Color
@@ -11,34 +12,33 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
-import android.widget.CheckBox
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
 import com.android.volley.DefaultRetryPolicy
 import com.android.volley.Request
 import com.android.volley.Response
+import com.android.volley.toolbox.JsonArrayRequest
 import com.android.volley.toolbox.JsonObjectRequest
 import com.feedpack.androidapp.views.choosedwp.ChooseDwpAdapter
 import com.feedpack.androidapp.R
 import com.feedpack.androidapp.VolleySingleton
 import com.feedpack.androidapp.models.FeedbackBodyModel
 import com.feedpack.androidapp.models.ProductModel
-import com.feedpack.androidapp.CameraFragment
-import com.feedpack.androidapp.FragmentStateHelper
+import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import kotlinx.android.synthetic.main.activity_feedback.*
+import org.json.JSONArray
 import org.json.JSONObject
 import java.lang.Exception
 
 class FeedbackActivity : AppCompatActivity() {
+
+    val gson: Gson = GsonBuilder().setPrettyPrinting().create()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_feedback)
 
 //        Set toolbar title
-        val gson = GsonBuilder().setPrettyPrinting().create()
         val product =
             gson.fromJson(this.intent.extras[ChooseDwpAdapter.CHOSEN_PRODUCT].toString(), ProductModel::class.java)
         title = product.item_name
@@ -52,6 +52,7 @@ class FeedbackActivity : AppCompatActivity() {
 
     // Bottom Menu Navigation
     private val navListener = object : BottomNavigationView.OnNavigationItemSelectedListener {
+
         override fun onNavigationItemSelected(item: MenuItem): Boolean {
 
             when (item.itemId) {
@@ -65,6 +66,28 @@ class FeedbackActivity : AppCompatActivity() {
                 }
                 R.id.nav_read_feedback -> {
                     addFragment(ReadFeedbackFragment())
+
+                    val product =
+                        gson.fromJson(this@FeedbackActivity.intent.extras[ChooseDwpAdapter.CHOSEN_PRODUCT].toString(), ProductModel::class.java)
+                    val url = "http://10.0.2.2:3002/getFeedbackOnProduct/${product.id}"
+                    val request = JsonArrayRequest(Request.Method.GET, url, null,
+                        Response.Listener<JSONArray> { response ->
+                            try {
+                                Log.d("App", "$response")
+                            } catch (e: Exception) {
+                                Log.d("App", "Exception $e")
+                            }
+                        }, Response.ErrorListener { Log.d("App", "Volley error from feedback $it") })
+
+                    request.retryPolicy = DefaultRetryPolicy(
+                        DefaultRetryPolicy.DEFAULT_TIMEOUT_MS,
+                        // 0 means no retry
+                        0, // DefaultRetryPolicy.DEFAULT_MAX_RETRIES = 2
+                        1f // DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
+                    )
+
+                    VolleySingleton.getInstance(this@FeedbackActivity).addToRequestQueue(request)
+
                     return true
                 }
             }
@@ -81,9 +104,6 @@ class FeedbackActivity : AppCompatActivity() {
     }
 
     fun onFeedbackSubmitClicked(view: View) {
-        val gson = GsonBuilder().setPrettyPrinting().create()
-        val product =
-            gson.fromJson(this.intent.extras[ChooseDwpAdapter.CHOSEN_PRODUCT].toString(), ProductModel::class.java)
 
         val che1: CheckBox = findViewById(R.id.checkBox_type_id_1)
         val che2: CheckBox = findViewById(R.id.checkBox_type_id_2)
@@ -94,7 +114,11 @@ class FeedbackActivity : AppCompatActivity() {
 
         val feedbackComment: EditText = findViewById(R.id.feedbackComment)
 
+        val product =
+            gson.fromJson(this.intent.extras[ChooseDwpAdapter.CHOSEN_PRODUCT].toString(), ProductModel::class.java)
+
         val feedbackBody = FeedbackBodyModel(
+
             productId = product.id,
             userId = 1,
             comment = feedbackComment.text.toString(),
@@ -194,20 +218,28 @@ class FeedbackActivity : AppCompatActivity() {
                 startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
             }
         }
-//        FragmentStateHelper()
-//        supportFragmentManager
-//            .beginTransaction()
-//            .replace(R.id.fragment_container, CameraFragment())
-//            .addToBackStack(null)
-//            .commit()
     }
 
+    var photos: MutableList<ImageView> = mutableListOf()
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             val imageBitmap = data?.extras?.get("data") as Bitmap
-            val imageView : ImageView = findViewById(R.id.thumbnail)
+            val imageView = ImageView(this)
             imageView.setImageBitmap(imageBitmap)
+
+            photos.add(imageView)
+
+            Log.d("App", "${photos.size}")
+
+            val gridView: GridView = findViewById(R.id.thumbnail_container)
+
+
+//            gridView.addView(imageView)
+//            val adapter = ArrayAdapter(this, R.layout.thumbnail_grid_cell, photos)
+//            gridView.adapter = adapter
+//            val imageView : ImageView = findViewById(R.id.thumbnail)
+//            imageView.setImageBitmap(imageBitmap)
         }
     }
 
