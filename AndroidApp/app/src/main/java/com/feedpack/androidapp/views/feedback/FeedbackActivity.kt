@@ -1,6 +1,5 @@
 package com.feedpack.androidapp.views.feedback
 
-import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Color
@@ -9,6 +8,7 @@ import android.provider.MediaStore
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
@@ -22,10 +22,13 @@ import com.feedpack.androidapp.views.choosedwp.ChooseDwpAdapter
 import com.feedpack.androidapp.R
 import com.feedpack.androidapp.VolleySingleton
 import com.feedpack.androidapp.models.FeedbackBodyModel
+import com.feedpack.androidapp.models.FeedbackModel
 import com.feedpack.androidapp.models.ProductModel
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.activity_feedback.*
+import kotlinx.android.synthetic.main.fragment_read_feedback.*
 import org.json.JSONArray
 import org.json.JSONObject
 import java.lang.Exception
@@ -73,9 +76,17 @@ class FeedbackActivity : AppCompatActivity() {
                     val request = JsonArrayRequest(Request.Method.GET, url, null,
                         Response.Listener<JSONArray> { response ->
                             try {
-                                Log.d("App", "$response")
+                                val feedbackList: ArrayList<FeedbackModel> = gson.fromJson(response.toString(),
+                                    object : TypeToken<ArrayList<FeedbackModel>>(){}.type)
+
+                                recyclerview_feedback_list.apply {
+                                    layoutManager = LinearLayoutManager(FeedbackActivity())
+                                    adapter = ReadFeedbackAdapter(feedbackList)
+                                }
+
+
                             } catch (e: Exception) {
-                                Log.d("App", "Exception $e")
+                                Log.d("App", "Exception in feedback fetch $e")
                             }
                         }, Response.ErrorListener { Log.d("App", "Volley error from feedback $it") })
 
