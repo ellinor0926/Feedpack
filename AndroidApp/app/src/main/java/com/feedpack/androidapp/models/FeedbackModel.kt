@@ -1,5 +1,8 @@
 package com.feedpack.androidapp.models
 
+import java.util.*
+import kotlin.collections.ArrayList
+
 data class FeedbackModel (
     val id: Int,
     val dwp_number: String,
@@ -8,5 +11,6 @@ data class FeedbackModel (
     val supplier: String,
     val comment: String,
     val sender: SenderModel,
-    val types: ArrayList<String>
+    val types: ArrayList<String>,
+    val created_at: String
 )

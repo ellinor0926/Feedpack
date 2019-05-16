@@ -49,7 +49,7 @@ exports.postFeedback = (req, res) => {
 }
 
 exports.getFeedbackOnProduct = (req, res) => {
-    let query = `SELECT f.id, ft.feedback_id as type_feedback_id, f.comment, GROUP_CONCAT(t.name) as type, u.first_name, u.last_name, p.item_name, p.item_number, p.dwp_number, s.number as supplier FROM feedback f
+    let query = `SELECT f.id, ft.feedback_id as type_feedback_id, f.comment, GROUP_CONCAT(t.name) as type, u.first_name, u.last_name, p.item_name, p.item_number, p.dwp_number, s.number as supplier, DATE_FORMAT(f.created_at, "%Y-%m-%d %H:%i") as created_at FROM feedback f
     JOIN products p ON f.product_id = p.id
     JOIN feedback_has_types ft ON f.id = ft.feedback_id
     JOIN types t ON ft.type_id = t.id
@@ -79,7 +79,8 @@ exports.getFeedbackOnProduct = (req, res) => {
                     last_name: r.last_name
                 },
                 types: r.type.split(','),
-                comment: r.comment
+                comment: r.comment,
+                created_at: r.created_at
             }
         })
         

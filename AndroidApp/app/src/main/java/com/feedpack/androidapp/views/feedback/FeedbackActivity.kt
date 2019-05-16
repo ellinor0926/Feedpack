@@ -32,6 +32,8 @@ import kotlinx.android.synthetic.main.fragment_read_feedback.*
 import org.json.JSONArray
 import org.json.JSONObject
 import java.lang.Exception
+import java.util.*
+import kotlin.collections.ArrayList
 
 class FeedbackActivity : AppCompatActivity() {
 
@@ -76,9 +78,10 @@ class FeedbackActivity : AppCompatActivity() {
                     val request = JsonArrayRequest(Request.Method.GET, url, null,
                         Response.Listener<JSONArray> { response ->
                             try {
+                                Log.d("App", "$response")
                                 val feedbackList: ArrayList<FeedbackModel> = gson.fromJson(response.toString(),
                                     object : TypeToken<ArrayList<FeedbackModel>>(){}.type)
-
+                                feedbackList.reverse()
                                 recyclerview_feedback_list.apply {
                                     layoutManager = LinearLayoutManager(FeedbackActivity())
                                     adapter = ReadFeedbackAdapter(feedbackList)
@@ -148,7 +151,8 @@ class FeedbackActivity : AppCompatActivity() {
             Request.Method.POST, url, body,
             Response.Listener { response ->
                 try {
-                    addFragment(ReadFeedbackFragment())
+
+//                    addFragment(ReadFeedbackFragment())
                     Log.d("App", "Post successful $response")
                 } catch (e: Exception) {
                     Log.d("App", "Exception $e")
@@ -167,7 +171,7 @@ class FeedbackActivity : AppCompatActivity() {
         Log.d("App", "feedbackBody: $feedbackBody")
     }
 
-    //    ImageView toggles efficiency, ergonomic, inspiring
+    //    ImageView toggles efficiency, ergonomic, inspiring checkboxes
     fun toggleCheckBox(view: View) {
         if (view is ImageView) {
 
@@ -243,14 +247,6 @@ class FeedbackActivity : AppCompatActivity() {
 
             Log.d("App", "${photos.size}")
 
-            val gridView: GridView = findViewById(R.id.thumbnail_container)
-
-
-//            gridView.addView(imageView)
-//            val adapter = ArrayAdapter(this, R.layout.thumbnail_grid_cell, photos)
-//            gridView.adapter = adapter
-//            val imageView : ImageView = findViewById(R.id.thumbnail)
-//            imageView.setImageBitmap(imageBitmap)
         }
     }
 
