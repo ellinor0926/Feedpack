@@ -53,7 +53,7 @@ class FeedpackActivity : AppCompatActivity() {
                     getProductBtn.isClickable
                 } else {
                     getProductBtn.setBackgroundColor(resources.getColor(R.color.disabledAcceptButton))
-                    
+
                 }
             }
 

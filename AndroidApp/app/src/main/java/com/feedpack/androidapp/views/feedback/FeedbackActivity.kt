@@ -220,6 +220,21 @@ class FeedbackActivity : AppCompatActivity() {
                     }
 
                 }
+                R.id.consumer_pack_btn -> {
+                    val che: CheckBox = findViewById(R.id.checkBox_type_id_1)
+
+                    che.isChecked = !che.isChecked
+                    Log.d("App", "CLICK")
+
+                    if (che.isChecked) {
+                        view.setColorFilter(Color.argb(100, 76, 175, 80))
+
+
+                    } else {
+                        view.setColorFilter(Color.argb(100, 216, 216, 216))
+
+                    }
+                }
             }
         }
     }
