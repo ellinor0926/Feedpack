@@ -3,6 +3,7 @@ drop database dwp_mock;
 create database dwp_mock;
 
 use dwp_mock;
+SET time_zone = '+01:00';
 
 create table hfbs(
 	id int primary key auto_increment,
@@ -47,6 +48,7 @@ create table feedback(
 	id int primary key auto_increment,
     product_id int not null,
     user_id int not null,
+    created_at datetime not null, 
     comment varchar(200),
     foreign key (product_id) references products(id),
     foreign key (user_id) references users(id)
@@ -94,10 +96,10 @@ values
 (3, 3), (4, 4), 
 (5, 3), (6, 2);
 
-insert into feedback (product_id, user_id, comment)
+insert into feedback (product_id, user_id, comment, created_at)
 values
-(1, 2, 'Lorem Ipsum'), (1, 1, 'Ipsum Lorem'),
-(2, 2, 'Lorem upsum'), (3, 1, 'Lorem?');
+(1, 2, 'Lorem Ipsum', now()), (1, 1, 'Ipsum Lorem', now()),
+(2, 2, 'Lorem upsum', now()), (3, 1, 'Lorem?', now());
 
 insert into feedback_has_types (feedback_id, type_id)
 values
@@ -108,16 +110,36 @@ select p.id, p.item_number, p.item_name, p.dwp_number, s.number as supplier from
 join products_suppliers ps on p.id = ps.product_id
 join suppliers s on ps.supplier_id = s.id;
 
-select f.comment, t.name as type, u.first_name, u.last_name, p.item_name, p.item_number, p.dwp_number, s.number as supplier from feedback f
+select f.id, f.comment, t.name as type, u.first_name, u.last_name, p.item_name, p.item_number, p.dwp_number, s.number as supplier, date_format(f.created_at, "%Y-%m-%d %H:%i") as created_at from feedback f
 join products p on f.product_id = p.id
 join feedback_has_types ft on f.id = ft.feedback_id
 join types t on ft.type_id = t.id
 join users u on f.user_id = u.id
 join products_suppliers ps on p.id = ps.product_id
 join suppliers s on ps.supplier_id = s.id
-where f.product_id = 3;
+where f.product_id = 2;
 
-select* from types;
+SELECT f.id,
+       ft.feedback_id       as type_feedback_id,
+       f.comment,
+       GROUP_CONCAT(t.name) as type,
+       u.first_name,
+       u.last_name,
+       p.item_name,
+       p.item_number,
+       p.dwp_number,
+       s.number             as supplier
+FROM feedback f
+         JOIN products p ON f.product_id = p.id
+         JOIN feedback_has_types ft ON f.id = ft.feedback_id
+         JOIN types t ON ft.type_id = t.id
+         JOIN users u ON f.user_id = u.id
+         JOIN products_suppliers ps ON p.id = ps.product_id
+         JOIN suppliers s ON ps.supplier_id = s.id
+WHERE f.product_id = 2
+GROUP BY f.id;
+
+select* from feedback_has_types;
 
 /*ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '5Ht$v6BJp%z!&D';*/
 
