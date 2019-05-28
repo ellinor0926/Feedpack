@@ -1,6 +1,5 @@
 package com.feedpack.androidapp.models
 
-import java.util.*
 import kotlin.collections.ArrayList
 
 data class FeedbackModel (

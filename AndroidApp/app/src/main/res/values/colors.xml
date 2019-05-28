@@ -5,4 +5,5 @@
     <color name="colorAccent">#FFDA1A</color>
     <color name="colorAccept">#4CAF50</color>
     <color name="colorBright">#FFFFFF</color>
+    <color name="disabledAcceptButton">#6A4CAF50</color>
 </resources>

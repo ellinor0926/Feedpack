@@ -4,36 +4,50 @@
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.CAMERA"/>
-    <uses-feature android:name="android.hardware.camera" android:required="true"/>
+
+    <uses-feature
+            android:name="android.hardware.camera"
+            android:required="true"/>
+
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
     <application
+            android:name=".KtApplication"
             android:allowBackup="true"
+            android:hardwareAccelerated="true"
             android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
-            android:usesCleartextTraffic="true"
             android:theme="@style/AppTheme"
-            android:name=".KtApplication"
-            android:hardwareAccelerated="true">
-        <activity android:name=".MainActivity"
-                  android:label="FeedPack">
+            android:usesCleartextTraffic="true">
+        <activity
+                android:name=".FeedpackActivity"
+                android:label="@string/title_activity_feedpack"
+                android:parentActivityName=".MainActivity"
+                android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value="com.feedpack.androidapp.MainActivity"/>
+        </activity>
+        <activity
+                android:name=".MainActivity"
+                android:label="FeedPack">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".views.choosedwp.ChooseDwpActivity"
-                  android:label="Choose product"
-                  android:launchMode="singleTop">
+        <activity
+                android:name=".views.choosedwp.ChooseDwpActivity"
+                android:label="Choose product"
+                android:launchMode="singleTop">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
                     android:value=".MainActivity"/>
         </activity>
-
         <activity
                 android:name=".views.feedback.FeedbackActivity"
                 android:label="Feedback"
@@ -43,7 +57,9 @@
                     android:value=".views.choosedwp.ChooseDwpActivity"/>
         </activity>
 
-        <meta-data android:name="preloaded_fonts" android:resource="@array/preloaded_fonts"/>
+        <meta-data
+                android:name="preloaded_fonts"
+                android:resource="@array/preloaded_fonts"/>
     </application>
 
 </manifest>
