@@ -222,16 +222,43 @@ class FeedbackActivity : AppCompatActivity() {
                 }
                 R.id.consumer_pack_btn -> {
                     val che: CheckBox = findViewById(R.id.checkBox_type_id_1)
-
+                    val checkmark: ImageView = findViewById(R.id.consumer_pack_check)
                     che.isChecked = !che.isChecked
-                    Log.d("App", "CLICK")
 
                     if (che.isChecked) {
-                        view.setColorFilter(Color.argb(100, 76, 175, 80))
+                        checkmark.visibility = View.VISIBLE
 
 
                     } else {
-                        view.setColorFilter(Color.argb(100, 216, 216, 216))
+                        checkmark.visibility = View.INVISIBLE
+
+                    }
+                }
+                R.id.multi_pack_btn -> {
+                    val che: CheckBox = findViewById(R.id.checkBox_type_id_2)
+                    val checkmark: ImageView = findViewById(R.id.multi_pack_check)
+                    che.isChecked = !che.isChecked
+
+                    if (che.isChecked) {
+                        checkmark.visibility = View.VISIBLE
+
+
+                    } else {
+                        checkmark.visibility = View.INVISIBLE
+
+                    }
+                }
+                R.id.unit_load_btn -> {
+                    val che: CheckBox = findViewById(R.id.checkBox_type_id_3)
+                    val checkmark: ImageView = findViewById(R.id.unit_load_check)
+                    che.isChecked = !che.isChecked
+
+                    if (che.isChecked) {
+                        checkmark.visibility = View.VISIBLE
+
+
+                    } else {
+                        checkmark.visibility = View.INVISIBLE
 
                     }
                 }
