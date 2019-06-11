@@ -1,10 +1,13 @@
 package com.feedpack.androidapp.views.feedback
 
+import android.app.Dialog
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
+import android.support.annotation.RequiresApi
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
@@ -12,6 +15,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
+import android.view.Window
 import android.widget.*
 import com.android.volley.DefaultRetryPolicy
 import com.android.volley.Request
@@ -28,16 +32,17 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.activity_feedback.*
+import kotlinx.android.synthetic.main.fragment_announcements.*
 import kotlinx.android.synthetic.main.fragment_read_feedback.*
 import org.json.JSONArray
 import org.json.JSONObject
 import java.lang.Exception
-import java.util.*
 import kotlin.collections.ArrayList
 
 class FeedbackActivity : AppCompatActivity() {
 
     val gson: Gson = GsonBuilder().setPrettyPrinting().create()
+    internal lateinit var dialog : Dialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,6 +59,7 @@ class FeedbackActivity : AppCompatActivity() {
         addFragment(SendFeedbackFragment())
 
     }
+
 
     // Bottom Menu Navigation
     private val navListener = object : BottomNavigationView.OnNavigationItemSelectedListener {
@@ -290,6 +296,15 @@ class FeedbackActivity : AppCompatActivity() {
             Log.d("App", "${photos.size}")
 
         }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun showDialog(view: View) {
+        view.requestPointerCapture()
+        dialog = Dialog(this)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(R.layout.popup_view)
+        dialog.show()
     }
 
 

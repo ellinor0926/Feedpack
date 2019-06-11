@@ -1,8 +1,10 @@
 package com.feedpack.androidapp
 
 import android.content.Intent
+import android.os.Build
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.annotation.RequiresApi
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -21,12 +23,13 @@ import java.lang.Exception
 
 class MainActivity : AppCompatActivity() {
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         start_feedpack_btn.setOnClickListener {
-
+            it.requestPointerCapture()
             val intent = Intent(this, FeedpackActivity::class.java)
             startActivity(intent)
         }
