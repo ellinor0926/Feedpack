@@ -48,7 +48,7 @@ create table feedback(
 	id int primary key auto_increment,
     product_id int not null,
     user_id int not null,
-    created_at datetime not null, 
+    created_at datetime not null default now(), 
     comment varchar(200),
     foreign key (product_id) references products(id),
     foreign key (user_id) references users(id)
