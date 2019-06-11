@@ -39,6 +39,9 @@ class FeedbackActivity : AppCompatActivity() {
 
     val gson: Gson = GsonBuilder().setPrettyPrinting().create()
 
+    private val GALLERY = 1
+    private val CAMERA = 2
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_feedback)
@@ -73,14 +76,19 @@ class FeedbackActivity : AppCompatActivity() {
                     addFragment(ReadFeedbackFragment())
 
                     val product =
-                        gson.fromJson(this@FeedbackActivity.intent.extras[ChooseDwpAdapter.CHOSEN_PRODUCT].toString(), ProductModel::class.java)
+                        gson.fromJson(
+                            this@FeedbackActivity.intent.extras[ChooseDwpAdapter.CHOSEN_PRODUCT].toString(),
+                            ProductModel::class.java
+                        )
                     val url = "http://10.0.2.2:3002/getFeedbackOnProduct/${product.id}"
                     val request = JsonArrayRequest(Request.Method.GET, url, null,
                         Response.Listener<JSONArray> { response ->
                             try {
                                 Log.d("App", "$response")
-                                val feedbackList: ArrayList<FeedbackModel> = gson.fromJson(response.toString(),
-                                    object : TypeToken<ArrayList<FeedbackModel>>(){}.type)
+                                val feedbackList: ArrayList<FeedbackModel> = gson.fromJson(
+                                    response.toString(),
+                                    object : TypeToken<ArrayList<FeedbackModel>>() {}.type
+                                )
                                 feedbackList.reverse()
                                 recyclerview_feedback_list.apply {
                                     layoutManager = LinearLayoutManager(FeedbackActivity())
@@ -267,30 +275,80 @@ class FeedbackActivity : AppCompatActivity() {
     }
 
 
-    val REQUEST_IMAGE_CAPTURE = 1
-    //    Camera Activity
+    fun choosePhotoFromGallary(view: View) {
+        val galleryIntent = Intent(
+            Intent.ACTION_PICK,
+            MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+        )
+
+        startActivityForResult(galleryIntent, GALLERY)
+    }
+
+
+    /**
+     *     Camera Activity
+     */
     fun startCamera(view: View) {
         Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
             takePictureIntent.resolveActivity(packageManager)?.also {
-                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
+                startActivityForResult(takePictureIntent, CAMERA)
             }
         }
     }
 
-    var photos: MutableList<ImageView> = mutableListOf()
+    var photos: MutableList<Bitmap> = mutableListOf()
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            val imageBitmap = data?.extras?.get("data") as Bitmap
-            val imageView = ImageView(this)
-            imageView.setImageBitmap(imageBitmap)
+        if (requestCode == GALLERY) {
+            val contentURI = data!!.data
 
-            photos.add(imageView)
+            val imageBitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, contentURI)
+            photos.add(imageBitmap)
+        }
+        if (requestCode == CAMERA && resultCode == RESULT_OK) {
+            val imageBitmap = data!!.extras!!.get("data") as Bitmap
+            photos.add(imageBitmap)
+        }
 
-            Log.d("App", "${photos.size}")
+        val image1 = findViewById<View>(R.id.img1) as ImageView?
+        val image2 = findViewById<View>(R.id.img2) as ImageView?
 
+        image1!!.setImageBitmap(photos.get(0))
+        if (photos.size == 2) {
+            image2!!.setImageBitmap(photos.get(1))
         }
     }
 
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
