@@ -261,7 +261,8 @@
                         android:id="@+id/open_camera_roll_btn"
                         app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="92dp"
                         android:tint="@color/colorPrimary"
-                        app:layout_constraintTop_toTopOf="@+id/start_camera_btn"/>
+                        app:layout_constraintTop_toTopOf="@+id/start_camera_btn"
+                        android:onClick="choosePhotoFromGallary"/>
                 <ImageButton
                         android:layout_width="77dp"
                         android:layout_height="43dp"

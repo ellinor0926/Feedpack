@@ -39,6 +39,7 @@ class FeedbackActivity : AppCompatActivity() {
 
     val gson: Gson = GsonBuilder().setPrettyPrinting().create()
 
+    private val GALLERY = 1
     private val CAMERA = 2
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -273,6 +274,17 @@ class FeedbackActivity : AppCompatActivity() {
         }
     }
 
+
+    fun choosePhotoFromGallary(view: View) {
+        val galleryIntent = Intent(
+            Intent.ACTION_PICK,
+            MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+        )
+
+        startActivityForResult(galleryIntent, GALLERY)
+    }
+
+
     /**
      *     Camera Activity
      */
@@ -287,25 +299,56 @@ class FeedbackActivity : AppCompatActivity() {
     var photos: MutableList<Bitmap> = mutableListOf()
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == GALLERY) {
+            val contentURI = data!!.data
+
+            val imageBitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, contentURI)
+            photos.add(imageBitmap)
+        }
         if (requestCode == CAMERA && resultCode == RESULT_OK) {
             val imageBitmap = data!!.extras!!.get("data") as Bitmap
             photos.add(imageBitmap)
+        }
 
-            val image1 = findViewById<View>(R.id.img1) as ImageView?
-            val image2 = findViewById<View>(R.id.img2) as ImageView?
+        val image1 = findViewById<View>(R.id.img1) as ImageView?
+        val image2 = findViewById<View>(R.id.img2) as ImageView?
 
-
-            image1!!.setImageBitmap(photos.get(0))
-            if(photos.size == 2) {
-                image2!!.setImageBitmap(photos.get(1))
-            }
-
-
-
-            Log.d("App", "${photos.size}")
-
+        image1!!.setImageBitmap(photos.get(0))
+        if (photos.size == 2) {
+            image2!!.setImageBitmap(photos.get(1))
         }
     }
 
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
